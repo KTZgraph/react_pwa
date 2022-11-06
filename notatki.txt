@@ -1,0 +1,265 @@
+kurs: https://www.udemy.com/course/react-progressive-web-app-with-workbox-and-webpack-tutorial/learn/lecture/26891186#overview
+repo: https://github.com/imranhsayed/react-pwa-workbox-example/blob/main/.babelrc
+
+
+mkdir react-pwa
+cd react-pwa
+npm init --yes
+npm i react react-dom
+npm i webpack webpack-cli webpack-dev-server -D
+
+
+mkdir public
+touch punlic/index.html
+
+    <!-- wżne żeby dodać div dla react -->
+    <div id="root"></div>
+
+2. stworzenie folderu src
+- stowrzneie App.js
+- stworzenie index.js
+
+3 instlaacja pluginów do webpacka
+- https://webpack.js.org/plugins/html-webpack-plugin/
+npm i html-webpack-plugin -D
+
+4 es6 nie jest rozumiany przez wszystkie rpzeglądarki
+- webpack rozumie javascript 
+-https://caniuse.com/
+-https://caniuse.com/?search=arrow arrow funckje sa wspierane przez es6
+- dlatego używamy babel paczki
+-https://babeljs.io/docs/en/babel-plugin-proposal-class-properties
+- https://babeljs.io/docs/en/babel-preset-react
+- https://www.npmjs.com/package/babel-loader
+- https://www.npmjs.com/package/css-loader
+- https://webpack.js.org/loaders/style-loader/
+- https://v4.webpack.js.org/loaders/file-loader/
+
+npm i @babel/core @babel/plugin-proposal-class-properties @babel/preset-env @babel/preset-react babel-loader css-loader style-loader file-loader -D
+
+
+WARNING https://webpack.js.org/loaders/sass-loader/ tutaj pod sass reguły w konfiguracji webpack module rules
+
+- tutorial webpacka https://codeytek.com/course/webpack-tutorial-course/
+
+5. konfiguracja babela - plik .babelrc
+- kurs babel https://codeytek.com/course-category/babel/
+
+6. przjeście do package.json i pisanie skryptów
+- https://www.udemy.com/course/react-progressive-web-app-with-workbox-and-webpack-tutorial/learn/lecture/26891342#overview
+
+7. w trakcie konfiguracji package.json trzeba skonfigurować produkcyjny serwer i doinstalwoac paczkę
+npm i serve -D
+
+- C:\Users\pawldo\Desktop\react_pwa\package.json
+"serve": "npm run prod & serve -s dist"
+
+
+8. uruchomienie serwera developerskiego
+C:\Users\pawldo\Desktop\react_pwa>npm run dev
+
+- [webpack-cli] Error: Cannot find module 'html-webpack-plugin'
+npm install html-webpack-plugin -D
+
+[webpack-cli] Failed to load 'C:\Users\pawldo\Desktop\react_pwa\webpack.config.js' config
+[webpack-cli] ReferenceError: path is not defined
+
+- C:\Users\pawldo\Desktop\react_pwa\webpack.config.js
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+
+BUG - export 'ReactDOM' (imported as 'ReactDOM') was not found in 'react-dom/client' (possible exports: createRoot, hydrateRoot)
+
+import React from "react";
+import { createRoot } from "react-dom";
+
+import App from "./App";
+
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = createRoot(document.getElementById("root"));
+root.render(<App />);
+
+9 uruchomienie po; widizii zmiany bo webpack działa z watch
+C:\Users\pawldo\Desktop\react_pwa>npm run dev
+
+- odpala się na porcie 8080 http://localhost:8080/
+
+10. uruchomienie produkcyjne
+C:\Users\pawldo\Desktop\react_pwa>npm run serve
+
+11. helper u mnie nie dizała
+serve --help
+'serve' is not recognized as an internal or external command,
+operable program or batch file.
+
+
+12. BUG 'NODE_ENV' is not recognized as an internal or external command,
+operable program or batch file.
+
+- https://stackoverflow.com/questions/11928013/node-env-is-not-recognized-as-an-internal-or-external-command-operable-comman
+na windowsie
+    "prod": "set NODE_ENV=production webpack --mode=production",
+na linucie/macos
+    "prod": "NODE_ENV=production webpack --mode=production",
+
+
+13. BUG nie towryz folderu dist
+- C:\Users\pawldo\Desktop\react_pwa\package.json
+- https://stackoverflow.com/questions/11928013/node-env-is-not-recognized-as-an-internal-or-external-command-operable-comman
+`for windows use & in between command also. Like,
+  "scripts": {
+    "start": "SET NODE_ENV=development & nodemon app/app.js",
+  }
+`
+
+    "prod": "set NODE_ENV=production & webpack --mode=production",
+
+
+
+# https://www.udemy.com/course/react-progressive-web-app-with-workbox-and-webpack-tutorial/learn/lecture/26962864#overview
+14. stworzenie komponentów
+C:\Users\pawldo\Desktop\react_pwa\src\pages
+
+15. instlaacja do layoutu
+https://www.npmjs.com/package/@svgr/cli
+npm install @svgr/cli --save-dev
+
+
+15.dopisanie do pakage.json
+    "svg": "svgr -d src/components/icons src/components/icons/svgs"
+dzięki paczce z 14 i tej linii wszsytkie svg komponenty będą zmienione jako reactowe
+
+16. skopiwonać sruowy svg https://raw.githubusercontent.com/imranhsayed/react-pwa-workbox-example/main/src/components/icons/svgs/netflix-logo.svg
+zapisac go do C:\Users\pawldo\Desktop\react_pwa\src\components\icons\svgs\netflix-logo.svg
+
+w terminalu teraz
+`C:\Users\pawldo\Desktop\react_pwa>npm run svg`
+widac outputy że zrobił komponenty Reacta z svg
+- C:\Users\pawldo\Desktop\react_pwa\src\components\icons\index.js
+- C:\Users\pawldo\Desktop\react_pwa\src\components\icons\NetflixLogo.js
+
+17 routing 
+- https://www.udemy.com/course/react-progressive-web-app-with-workbox-and-webpack-tutorial/learn/lecture/26963224#overview
+robię po swojemu npm i react-router-dom
+
+WARNING npm run buil jest tutaj zamieniony na npm run prod
+
+18. Zmienne środowiskowe
+- https://www.udemy.com/course/react-progressive-web-app-with-workbox-and-webpack-tutorial/learn/lecture/26963816#overview
+- https://www.npmjs.com/package/dotenv-webpack
+npm i dotenv-webpack -D
+
+19. Instalacja axiosa żeby robić requesty
+npm i axios  
+
+20 workbox 
+- https://www.udemy.com/course/react-progressive-web-app-with-workbox-and-webpack-tutorial/learn/lecture/27005416#overview
+- https://developer.chrome.com/docs/workbox/
+- https://www.npmjs.com/package/workbox-webpack-plugin
+- https://developer.chrome.com/docs/workbox/modules/workbox-webpack-plugin/#generatesw-plugin workbox z webpackiem
+
+npm i workbox-webpack-plugin -D
+
+
+21. InjectManifest
+https://developer.chrome.com/docs/workbox/modules/workbox-webpack-plugin/#injectmanifest-plugin
+    new InjectManifest({
+      // These are some common options, and not all are required.
+      // Consult the docs for more info.
+      swSrc: "./src/src-sw.js",
+      // output
+      swDest: "sw.js",
+    }),
+
+22. npm install copy-webpack-plugin -D
+https://webpack.js.org/plugins/copy-webpack-plugin/
+
+const CopyPlugin = require("copy-webpack-plugin");
+    new CopyPlugin({
+      patterns: [
+        { from: "./src/favicon.ico", to: "" },
+        { from: "./src/manifest.json", to: "" },
+        { from: "./src/logo192.png", to: "" },
+        { from: "./src/logo512.png", to: "" },
+      ],
+    }),
+
+23 sprawdzenie czy dobrze zrobi produkcyjne
+npm run prod
+FIXME - są błedy ERROR in Can't find self.__WB_MANIFEST in your SW source.
+
+24. serviceWorkerRegistration.js
+- https://developer.chrome.com/docs/workbox/modules/workbox-window/
+
+
+25. npm i workbox-window
+https://www.npmjs.com/package/workbox-window
+https://developer.chrome.com/docs/workbox/using-workbox-window/
+
+26. konfiguracja C:\Users\pawldo\Desktop\react_pwa\src\serviceWorkerRegistration.js
+
+
+27 konfiguracja C:\Users\pawldo\Desktop\react_pwa\src\src-sw.js
+- https://developer.chrome.com/docs/workbox/modules/workbox-core/
+- do tego używamy https://developer.chrome.com/docs/workbox/modules/workbox-core/#clients-claim
+npm install workbox-core #bez D ani innych przelączników
+
+28. problem z skipWaiting
+
+29. npm i workbox-precaching
+- https://www.npmjs.com/package/workbox-precaching
+
+- https://developer.chrome.com/docs/workbox/precaching-with-workbox/#side-by-side-comparison wersja po prawej "injectManifest"
+import {precacheAndRoute} from 'workbox-precaching';
+
+precacheAndRoute(self.__WB_MANIFEST);
+
+
+    "prod": "set NODE_ENV=production & webpack --mode=production",
+
+30. npm run serve 
+teraz to działa
+- http://localhost:3000/
+
+31. podlinkowanie favicone i manifestu do punli index.html
+
+32. cache google fonts i routingu
+- https://developer.chrome.com/docs/workbox/modules/workbox-recipes/
+
+- https://developer.chrome.com/docs/workbox/modules/workbox-recipes/#google-fonts-cache google fonts
+import {registerRoute} from 'workbox-routing';
+ trzebva doinstalować
+
+33. npm i workbox-routing
+https://developer.chrome.com/docs/workbox/modules/workbox-routing/#how-routing-is-performed
+
+
+34. npm i workbox-strategies
+https://developer.chrome.com/docs/workbox/modules/workbox-strategies/
+
+#Stale-While-Revalidate
+- https://web.dev/offline-cookbook/#stale-while-revalidate
+import {StaleWhileRevalidate} from 'workbox-strategies';
+
+
+35. npm i workbox-expiration
+import {ExpirationPlugin} from 'workbox-expiration';
+
+36. npm i workbox-cacheable-response
+- https://developer.chrome.com/docs/workbox/modules/workbox-cacheable-response/
+- import {CacheableResponsePlugin} from 'workbox-cacheable-response';
+
+
+37. Caching Images , stlyes ans scripts 
+- https://developer.chrome.com/docs/workbox/modules/workbox-recipes/
+- https://developer.chrome.com/docs/workbox/modules/workbox-recipes/#image-cache
+- https://developer.chrome.com/docs/workbox/modules/workbox-routing/#how-routing-is-performed cache first strategy
+- https://developer.chrome.com/docs/workbox/modules/workbox-strategies/#cache-first-cache-falling-back-to-network
+
+
+- https://developer.chrome.com/docs/workbox/modules/workbox-recipes/#static-resources-cache
+
+npm run serve
+
+38. Cache API response
